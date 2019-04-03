@@ -73,7 +73,7 @@ class RedisClient(object):
         :return: 设置结果
         """
         print('代理', proxy, '可用，设置为', MAX_SCORE)
-        return self.db.zadd(REDIS_KEY, MAX_SCORE, proxy)
+        return self.db.zadd(REDIS_KEY, { proxy:MAX_SCORE })
     
     def count(self):
         """

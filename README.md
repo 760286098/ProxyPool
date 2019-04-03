@@ -30,6 +30,7 @@ pip3 install -r requirements.txt
 
 ```
 python3 run.py
+python3 run.py >/dev/null  2>&1 &
 ```
 
 ## 获取代理

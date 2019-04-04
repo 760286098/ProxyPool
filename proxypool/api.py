@@ -38,5 +38,25 @@ def get_counts():
     return str(conn.count())
 
 
+@app.route('/pop')
+def pop():
+    """
+    Get a sunid
+    :return:
+    """
+    conn = get_conn()
+    return conn.pop()
+
+
+@app.route('/count2')
+def get_snuid_count():
+    """
+    Get the count of proxies
+    :return: sunid总量
+    """
+    conn = get_conn()
+    return str(conn.snuid_count())
+
+
 if __name__ == '__main__':
     app.run()

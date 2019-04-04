@@ -1,9 +1,10 @@
-import redis
-from proxypool.error import PoolEmptyError
-from proxypool.setting import REDIS_HOST, REDIS_PORT, REDIS_PASSWORD, REDIS_KEY
-from proxypool.setting import MAX_SCORE, MIN_SCORE, INITIAL_SCORE
-from random import choice
 import re
+from random import choice
+
+import redis
+
+from proxypool.error import PoolEmptyError
+from proxypool.setting import *
 
 
 class RedisClient(object):
@@ -51,7 +52,7 @@ class RedisClient(object):
         :return: 修改后的代理分数
         """
         score = self.db.zscore(REDIS_KEY, proxy)
-        if score and score > MIN_SCORE:
+        if score and (score > MIN_SCORE_1 or (MIN_SCORE_2 < score <= INITIAL_SCORE)):
             print('代理', proxy, '当前分数', score, '减1')
             return self.db.zincrby(REDIS_KEY, -1, proxy)
         else:
@@ -64,7 +65,7 @@ class RedisClient(object):
         :param proxy: 代理
         :return: 是否存在
         """
-        return not self.db.zscore(REDIS_KEY, proxy) is None
+        return self.db.zscore(REDIS_KEY, proxy) is not None
 
     def max(self, proxy):
         """
@@ -87,7 +88,7 @@ class RedisClient(object):
         获取全部代理
         :return: 全部代理列表
         """
-        return self.db.zrangebyscore(REDIS_KEY, MIN_SCORE, MAX_SCORE)
+        return self.db.zrangebyscore(REDIS_KEY, MIN_SCORE_2, MAX_SCORE)
 
     def batch(self, start, stop):
         """
@@ -98,8 +99,30 @@ class RedisClient(object):
         """
         return self.db.zrevrange(REDIS_KEY, start, stop - 1)
 
+    def push(self, snuid):
+        """
+        从列表头部插入snuid，
+        :param snuid: 参数 snuid
+        :return: 添加结果
+        """
+        self.db.lpush(SUNID_KEY, snuid)
+
+    def pop(self):
+        """
+        移出并获取列表的最后一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止。
+        :return: 尾部的snuid
+        """
+        return self.db.brpop(SUNID_KEY)
+
+    def snuid_count(self):
+        """
+       获取数量
+       :return: 数量
+       """
+        return self.db.llen(SUNID_KEY)
+
 
 if __name__ == '__main__':
     conn = RedisClient()
-    r = conn.batch(680, 688)
+    r = conn.batch(0, 100)
     print(r)

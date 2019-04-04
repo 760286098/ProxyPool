@@ -8,10 +8,12 @@ REDIS_PORT = 6379
 REDIS_PASSWORD = None
 
 REDIS_KEY = 'proxies'
+SUNID_KEY = 'sunid'
 
 # 代理分数
 MAX_SCORE = 100
-MIN_SCORE = 0
+MIN_SCORE_1 = 97
+MIN_SCORE_2 = 7
 INITIAL_SCORE = 10
 
 VALID_STATUS_CODES = [200, 302]
@@ -25,7 +27,7 @@ TESTER_CYCLE = 20
 GETTER_CYCLE = 300
 
 # 测试API，建议抓哪个网站测哪个
-TEST_URL = 'http://www.baidu.com'
+TEST_URL = 'http://weixin.sogou.com'
 
 # API配置
 API_HOST = '0.0.0.0'
@@ -35,6 +37,10 @@ API_PORT = 5555
 TESTER_ENABLED = True
 GETTER_ENABLED = True
 API_ENABLED = True
+COOKIE_ENABLED = False
 
 # 最大批测试量
 BATCH_TEST_SIZE = 10
+
+# 爬取间隔
+SLEEP_TIME = 10

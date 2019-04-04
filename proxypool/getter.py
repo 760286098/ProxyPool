@@ -1,10 +1,11 @@
-from proxypool.tester import Tester
-from proxypool.db import RedisClient
-from proxypool.crawler import Crawler
-from proxypool.setting import *
 import sys
 
-class Getter():
+from proxypool.crawler import Crawler
+from proxypool.db import RedisClient
+from proxypool.setting import *
+
+
+class Getter:
     def __init__(self):
         self.redis = RedisClient()
         self.crawler = Crawler()

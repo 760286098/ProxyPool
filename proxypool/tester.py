@@ -1,7 +1,9 @@
 import asyncio
-import aiohttp
-import time
 import sys
+import time
+
+import aiohttp
+
 try:
     from aiohttp import ClientError
 except:
@@ -13,7 +15,7 @@ from proxypool.setting import *
 class Tester(object):
     def __init__(self):
         self.redis = RedisClient()
-    
+
     async def test_single_proxy(self, proxy):
         """
         测试单个代理
@@ -34,10 +36,10 @@ class Tester(object):
                     else:
                         self.redis.decrease(proxy)
                         print('请求响应码不合法 ', response.status, 'IP', proxy)
-            except (ClientError, aiohttp.client_exceptions.ClientConnectorError, asyncio.TimeoutError, AttributeError):
+            except (ClientError, asyncio.TimeoutError, AttributeError):
                 self.redis.decrease(proxy)
                 print('代理请求失败', proxy)
-    
+
     def run(self):
         """
         测试主函数

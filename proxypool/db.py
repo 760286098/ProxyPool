@@ -19,7 +19,7 @@ class RedisClient(object):
 
     def add(self, proxy, score=INITIAL_SCORE):
         """
-        添加代理，设置分数为最高
+        添加代理，设置分数为10
         :param proxy: 代理
         :param score: 分数
         :return: 添加结果
@@ -39,7 +39,7 @@ class RedisClient(object):
         if len(result):
             return choice(result)
         else:
-            result = self.db.zrevrange(REDIS_KEY, 0, 100)
+            result = self.db.zrevrange(REDIS_KEY, MIN_SCORE_2, MAX_SCORE)
             if len(result):
                 return choice(result)
             else:
@@ -98,28 +98,6 @@ class RedisClient(object):
         :return: 代理列表
         """
         return self.db.zrevrange(REDIS_KEY, start, stop - 1)
-
-    def push(self, snuid):
-        """
-        从列表头部插入snuid，
-        :param snuid: 参数 snuid
-        :return: 添加结果
-        """
-        self.db.lpush(SUNID_KEY, snuid)
-
-    def pop(self):
-        """
-        移出并获取列表的最后一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止。
-        :return: 尾部的snuid
-        """
-        return self.db.brpop(SUNID_KEY)
-
-    def snuid_count(self):
-        """
-       获取数量
-       :return: 数量
-       """
-        return self.db.llen(SUNID_KEY)
 
 
 if __name__ == '__main__':

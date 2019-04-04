@@ -8,7 +8,6 @@ REDIS_PORT = 6379
 REDIS_PASSWORD = None
 
 REDIS_KEY = 'proxies'
-SUNID_KEY = 'sunid'
 
 # 代理分数
 MAX_SCORE = 100
@@ -37,10 +36,6 @@ API_PORT = 5555
 TESTER_ENABLED = True
 GETTER_ENABLED = True
 API_ENABLED = True
-COOKIE_ENABLED = False
 
 # 最大批测试量
 BATCH_TEST_SIZE = 10
-
-# 爬取间隔
-SLEEP_TIME = 10

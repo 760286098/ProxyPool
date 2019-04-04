@@ -4,7 +4,6 @@ from multiprocessing import Process
 from proxypool.api import app
 from proxypool.getter import Getter
 from proxypool.setting import *
-from proxypool.spider import Spider
 from proxypool.tester import Tester
 
 
@@ -35,16 +34,6 @@ class Scheduler:
         """
         app.run(API_HOST, API_PORT)
 
-    def schedule_cookie(self, cycle=SLEEP_TIME):
-        """
-        定时获取Cookie
-        """
-        spider = Spider()
-        while True:
-            print('开始抓取cookie')
-            spider.run()
-            time.sleep(cycle)
-
     def run(self):
         print('代理池开始运行')
 
@@ -59,7 +48,3 @@ class Scheduler:
         if API_ENABLED:
             api_process = Process(target=self.schedule_api)
             api_process.start()
-
-        if COOKIE_ENABLED:
-            cookie_process = Process(target=self.schedule_cookie)
-            cookie_process.start()

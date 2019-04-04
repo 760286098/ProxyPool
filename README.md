@@ -30,8 +30,8 @@ pip3 install -r requirements.txt
 
 ```
 python3 run.py
-nohup python3 /root/ProxyPool/run.py >/dev/null  2>&1 &
-nohup python3 /root/ProxyPool/run.py 1>out.log 2>err.log &
+nohup python3 run.py >/dev/null  2>&1 &
+nohup python3 run.py 1>out.log 2>err.log &
 ```
 
 ## 获取代理
